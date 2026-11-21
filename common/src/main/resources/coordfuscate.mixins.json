@@ -1,0 +1,25 @@
+{
+    "required": true,
+    "minVersion": "0.8",
+    "package": "princ.coordfuscate.client.mixin",
+    "compatibilityLevel": "JAVA_25",
+    "client": [
+        "MinecraftMixin",
+        "gui.components.debug.DebugEntryBiomeMixin",
+        "gui.components.debug.DebugEntryLookingAtStateMixin",
+        "gui.components.debug.DebugEntryPositionMixin",
+        "gui.components.debug.DebugEntrySectionPositionMixin",
+        "multiplayer.ClientPacketListenerMixin",
+        "renderer.CloudRendererMixin",
+        "renderer.chunk.SectionCompilerMixin",
+        "renderer.extract.LevelExtractorMixin",
+        "server.packs.resources.SimpleReloadInstanceMixin"
+    ],
+    "injectors": {
+        "defaultRequire": 1
+    },
+    "overwrites": {
+        "requireAnnotations": true
+    }
+}
+
