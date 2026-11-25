@@ -8,7 +8,9 @@ import net.minecraft.client.renderer.block.BlockStateModelSet;
 import net.minecraft.client.renderer.block.dispatch.BlockStateModel;
 import net.minecraft.client.renderer.chunk.SectionCompiler;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
+import net.minecraft.util.Util;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -65,17 +67,50 @@ public class SectionCompilerMixin {
     )
     BlockStateModel coordfuscate$disguiseBedrockModel(BlockStateModel blockModel, @Local(name = "pos") BlockPos pos, @Local(name = "blockState") BlockState blockState) {
         if (config().disguiseBedrock && blockState.is(Blocks.BEDROCK)) {
+            if (config().disguiseBedrock$reveal) {
+                Map<BlockPos, Long> reveal = minecraftDuck().coordfuscate$revealBedrock();
+                if (reveal.get(pos) != null) {
+                    if (Util.getMillis() - reveal.get(pos) < 1000L) {
+                        return blockModel;
+                    }
+                    reveal.remove(pos, reveal.get(pos));
+                }
+            }
             Map<BlockPos, BlockStateModel> cache = minecraftDuck().coordfuscate$disguiseBedrockCache();
-            BlockState disguiseBlockState = this.coordfuscate$disguiseBlockState(minecraft(), blockState, pos);
-            return cache.computeIfAbsent(pos.immutable(), ignored -> this.blockModelSet.get(disguiseBlockState));
+            return cache.computeIfAbsent(pos.immutable(), ignored -> this.coordfuscate$disguiseBedrockModel(minecraft(), blockModel, pos));
         }
         return blockModel;
     }
 
     @Unique
-    BlockState coordfuscate$disguiseBlockState(Minecraft minecraft, BlockState blockState, BlockPos pos) {
+    BlockStateModel coordfuscate$disguiseBedrockModel(Minecraft minecraft, BlockStateModel blockModel, BlockPos pos) {
         ClientLevel level = minecraft.level;
-        if (level == null) return blockState;
+        if (level == null) return blockModel;
+
+        for (Direction direction : Direction.Plane.HORIZONTAL) {
+            BlockPos disguisePos = pos.relative(direction);
+            BlockState disguiseBlockState = level.getBlockState(disguisePos);
+            if (config().disguiseBedrock$imitate.contains(disguiseBlockState.getBlock())) {
+                return this.blockModelSet.get(disguiseBlockState);
+            }
+        }
+
+        for (Direction direction : Direction.Plane.HORIZONTAL) {
+            BlockPos disguisePos = pos.relative(direction);
+            BlockState disguiseBlockState = level.getBlockState(disguisePos);
+            if (disguiseBlockState.is(Blocks.BEDROCK)) {
+                BlockStateModel disguiseBlockModel = minecraftDuck().coordfuscate$disguiseBedrockCache().get(disguisePos.immutable());
+                if (disguiseBlockModel != null) return disguiseBlockModel;
+            }
+        }
+
+        for (Direction direction : Direction.Plane.VERTICAL) {
+            BlockPos disguisePos = pos.relative(direction);
+            BlockState disguiseBlockState = level.getBlockState(disguisePos);
+            if (config().disguiseBedrock$imitate.contains(disguiseBlockState.getBlock())) {
+                return this.blockModelSet.get(disguiseBlockState);
+            }
+        }
 
         int y = pos.getY();
         boolean overworld = level.dimension() == Level.OVERWORLD;
@@ -85,13 +120,13 @@ public class SectionCompilerMixin {
         boolean netherBedrockLayer = (y > 0 && y <= 4) || (y >= 123 && y < 127);
 
         if (overworld && !overworldBedrockLayer) {
-            return blockState;
+            return blockModel;
         }
         if (nether && !netherBedrockLayer) {
-            return blockState;
+            return blockModel;
         }
         if (!overworld && !nether) {
-            return blockState;
+            return blockModel;
         }
 
         int[] searchYs;
@@ -124,8 +159,8 @@ public class SectionCompilerMixin {
                             for (int searchY : searchYs) {
                                 BlockPos disguisePos = new BlockPos(x, searchY, z);
                                 BlockState disguiseBlockState = chunk.getBlockState(disguisePos);
-                                if (config().disguiseBedrock$whitelist.contains(disguiseBlockState.getBlock())) {
-                                    return disguiseBlockState;
+                                if (config().disguiseBedrock$imitate.contains(disguiseBlockState.getBlock())) {
+                                    return this.blockModelSet.get(disguiseBlockState);
                                 }
                             }
                         }
@@ -134,6 +169,6 @@ public class SectionCompilerMixin {
             }
         }
 
-        return blockState;
+        return blockModel;
     }
 }

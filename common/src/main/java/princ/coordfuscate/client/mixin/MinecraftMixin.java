@@ -25,6 +25,9 @@ public class MinecraftMixin implements MinecraftDuck {
     @Unique
     final Map<BlockPos, BlockStateModel> coordfuscate$disguiseBedrockCache = new ConcurrentHashMap<>();
 
+    @Unique
+    final Map<BlockPos, Long> coordfuscate$revealBedrock = new ConcurrentHashMap<>();
+
     @Override
     public int coordfuscate$posOffset() {
         return this.coordfuscate$seedOffset;
@@ -38,6 +41,11 @@ public class MinecraftMixin implements MinecraftDuck {
     @Override
     public Map<BlockPos, BlockStateModel> coordfuscate$disguiseBedrockCache() {
         return this.coordfuscate$disguiseBedrockCache;
+    }
+
+    @Override
+    public Map<BlockPos, Long> coordfuscate$revealBedrock() {
+        return this.coordfuscate$revealBedrock;
     }
 
     @Override

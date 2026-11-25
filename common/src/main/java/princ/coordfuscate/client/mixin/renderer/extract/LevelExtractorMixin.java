@@ -20,7 +20,7 @@ public class LevelExtractorMixin {
     private Minecraft minecraft;
 
     @Inject(method = "allChanged", at = @At("HEAD"))
-    void coordfuscate$allChanged(CallbackInfo callbackInfo) {
+    void coordfuscate$refresh(CallbackInfo callbackInfo) {
         MinecraftDuck duck = (MinecraftDuck) this.minecraft;
         duck.coordfuscate$posOffset(posOffset());
         duck.coordfuscate$disguiseBedrockCache().clear();

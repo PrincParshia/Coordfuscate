@@ -12,6 +12,7 @@ import me.fzzyhmstrs.fzzy_config.validation.minecraft.ValidatedRegistryType;
 import me.fzzyhmstrs.fzzy_config.validation.misc.ValidatedEnum;
 import me.fzzyhmstrs.fzzy_config.validation.misc.ValidatedKeybind;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.item.properties.numeric.CompassAngleState;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
@@ -33,7 +34,7 @@ public class CoordfuscateConfig extends Config {
     public CoordfuscateConfig() {
         super(withDefaultNamespace(""), "", "", NAMESPACE);
 
-        this.disguiseBedrock$whitelist = new ValidatedList<>(
+        this.disguiseBedrock$imitate = new ValidatedList<>(
                 BuiltInRegistries.BLOCK.stream().toList(),
                 ValidatedRegistryType.of(BuiltInRegistries.BLOCK)
         ).toChoiceList(
@@ -45,14 +46,27 @@ public class CoordfuscateConfig extends Config {
                 (block, key) -> block.getName(),
                 (block, key) -> Component.literal(BuiltInRegistries.BLOCK.getKey(block).toString())
         );
+        this.compassDrift$applyFor = new ValidatedList<>(
+                Arrays.asList(CompassAngleState.CompassTarget.values()),
+                new ValidatedEnum<>(CompassAngleState.CompassTarget.class)
+        ).toChoiceList(
+                Arrays.asList(CompassAngleState.CompassTarget.values()),
+                ValidatedChoiceList.WidgetType.POPUP,
+                (compassTarget, identifier) -> Component.translatable(CONFIG_TRANSLATION_PREFIX + ".compassDrift$applyFor." + compassTarget.name())
+        );
     }
 
     public TextureRotation textureRotation = TextureRotation.RANDOM;
     public CloudPosition cloudPosition = CloudPosition.RANDOM;
     public ConfigGroup disguiseBedrock$group = new ConfigGroup("disguiseBedrock");
     public boolean disguiseBedrock = true;
+    public ValidatedChoiceList<Block> disguiseBedrock$imitate;
     @ConfigGroup.Pop
-    public ValidatedChoiceList<Block> disguiseBedrock$whitelist;
+    public boolean disguiseBedrock$reveal = true;
+    public ConfigGroup compassDrift$group = new ConfigGroup("compassDrift");
+    public boolean compassDrift = true;
+    @ConfigGroup.Pop
+    public ValidatedChoiceList<CompassAngleState.CompassTarget> compassDrift$applyFor;
     public DebugInfoConfig debugInfo = new DebugInfoConfig();
 
     @Translation(prefix = CONFIG_TRANSLATION_PREFIX + ".debugInfo")
@@ -60,7 +74,7 @@ public class CoordfuscateConfig extends Config {
 
         public DebugInfoConfig() {
             this.unmask$key = new ValidatedKeybind(new FzzyKeybind.Builder().keyboard(InputConstants.UNKNOWN.getValue()).build());
-            this.unmask$list = new ValidatedList<>(
+            this.unmask$reveal = new ValidatedList<>(
                     Arrays.asList(DebugInfo.values()),
                     new ValidatedEnum<>(DebugInfo.class)
             ).toChoiceList(
@@ -72,7 +86,7 @@ public class CoordfuscateConfig extends Config {
         public ConfigGroup unmask$group = new ConfigGroup("unmask");
         public ValidatedKeybind unmask$key;
         @ConfigGroup.Pop
-        public ValidatedChoiceList<DebugInfo> unmask$list;
+        public ValidatedChoiceList<DebugInfo> unmask$reveal;
         public boolean smartMask = true;
         public ConfigGroup mask$group = new ConfigGroup("mask");
         public boolean mask$xyz = true;

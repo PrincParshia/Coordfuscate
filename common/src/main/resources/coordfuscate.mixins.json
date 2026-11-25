@@ -10,9 +10,11 @@
         "gui.components.debug.DebugEntryPositionMixin",
         "gui.components.debug.DebugEntrySectionPositionMixin",
         "multiplayer.ClientPacketListenerMixin",
+        "multiplayer.MultiPlayerGameModeMixin",
         "renderer.CloudRendererMixin",
         "renderer.chunk.SectionCompilerMixin",
         "renderer.extract.LevelExtractorMixin",
+        "renderer.item.properties.numeric.CompassAngleStateMixin",
         "server.packs.resources.SimpleReloadInstanceMixin"
     ],
     "injectors": {

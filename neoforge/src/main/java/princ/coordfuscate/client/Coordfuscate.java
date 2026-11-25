@@ -13,9 +13,8 @@ public class Coordfuscate {
 
     public Coordfuscate(IEventBus eventBus) {
         NeoForge.EVENT_BUS.addListener((ClientTickEvent.Post event) -> {
-            if (!config().debugInfo.unmask$key.isPressed() && minecraftDuck().coordfuscate$maskDebugInfo()) {
-                minecraftDuck().coordfuscate$maskDebugInfo(false);
-            }
+            revealBedrock(minecraft());
+            removeSmartMask(minecraft());
         });
     }
 }

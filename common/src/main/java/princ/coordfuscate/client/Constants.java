@@ -5,8 +5,10 @@ import me.fzzyhmstrs.fzzy_config.api.RegisterType;
 import me.fzzyhmstrs.fzzy_config.validation.collection.ValidatedChoiceList;
 import me.fzzyhmstrs.fzzy_config.validation.misc.ValidatedKeybind;
 import net.minecraft.client.Minecraft;
+import net.minecraft.core.BlockPos;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.RandomSource;
+import net.minecraft.util.Util;
 import net.minecraft.world.level.levelgen.RandomSupport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,13 +51,32 @@ public class Constants {
         return random.nextBoolean() ? i : -i;
     }
 
+    public static void revealBedrock(Minecraft minecraft) {
+        if (!config().disguiseBedrock$reveal) return;
+        MinecraftDuck duck = (MinecraftDuck) minecraft;
+        long now = Util.getMillis();
+        duck.coordfuscate$revealBedrock().entrySet().removeIf(entry -> {
+            BlockPos pos = entry.getKey();
+            boolean disguise = now - entry.getValue() >= 1000L;
+            if (disguise) minecraft.levelExtractor.setBlocksDirty(pos.getX(), pos.getY(), pos.getZ(), pos.getX(), pos.getY(), pos.getZ());
+            return disguise;
+        });
+    }
+
     public static boolean maskDebugInfo(DebugInfo debugInfo) {
         ValidatedKeybind key = config().debugInfo.unmask$key;
-        ValidatedChoiceList<DebugInfo> list = config().debugInfo.unmask$list;
+        ValidatedChoiceList<DebugInfo> list = config().debugInfo.unmask$reveal;
         boolean unmask = key.isPressed() && list.contains(debugInfo);
         if (config().debugInfo.smartMask) {
             unmask = unmask && !minecraftDuck().coordfuscate$maskDebugInfo();
         }
         return !unmask;
+    }
+
+    public static void removeSmartMask(Minecraft minecraft) {
+        MinecraftDuck duck = (MinecraftDuck) minecraft;
+        if (!config().debugInfo.unmask$key.isPressed() && duck.coordfuscate$maskDebugInfo()) {
+            duck.coordfuscate$maskDebugInfo(false);
+        }
     }
 }

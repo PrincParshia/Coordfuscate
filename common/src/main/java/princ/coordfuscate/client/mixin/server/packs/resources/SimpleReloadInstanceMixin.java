@@ -20,7 +20,7 @@ import static princ.coordfuscate.client.Constants.*;
 public class SimpleReloadInstanceMixin {
 
     @Inject(method = "create", at = @At("HEAD"))
-    private static void coordfuscate$create(ResourceManager resourceManager, List<PreparableReloadListener> listeners, Executor backgroundExecutor, Executor mainThreadExecutor, CompletableFuture<Unit> initialTask, boolean enableProfiling, CallbackInfoReturnable<ReloadInstance> callbackInfoReturnable) {
+    private static void coordfuscate$refresh(ResourceManager resourceManager, List<PreparableReloadListener> listeners, Executor backgroundExecutor, Executor mainThreadExecutor, CompletableFuture<Unit> initialTask, boolean enableProfiling, CallbackInfoReturnable<ReloadInstance> callbackInfoReturnable) {
         minecraftDuck().coordfuscate$posOffset(posOffset());
         minecraftDuck().coordfuscate$disguiseBedrockCache().clear();
     }
