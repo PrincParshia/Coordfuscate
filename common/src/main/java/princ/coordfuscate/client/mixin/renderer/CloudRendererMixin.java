@@ -12,12 +12,7 @@ import static princ.coordfuscate.client.Constants.*;
 @Mixin(CloudRenderer.class)
 public class CloudRendererMixin {
 
-    @ModifyVariable(
-            method = "prepare(ILnet/minecraft/client/CloudStatus;FILnet/minecraft/world/phys/Vec3;JF)V",
-            at = @At("HEAD"),
-            name = "cameraPosition",
-            argsOnly = true
-    )
+    @ModifyVariable(method = "render", at = @At("HEAD"), name = "cameraPosition", argsOnly = true)
     Vec3 coordfuscate$modifyCameraPosition(Vec3 cameraPosition) {
         if (config().cloudPosition == CloudPosition.RANDOM) {
             int offset = minecraftDuck().coordfuscate$posOffset();
