@@ -4,8 +4,8 @@ import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.renderer.block.BlockStateModelSet;
-import net.minecraft.client.renderer.block.dispatch.BlockStateModel;
+import net.minecraft.client.renderer.block.BlockRenderDispatcher;
+import net.minecraft.client.renderer.block.model.BlockStateModel;
 import net.minecraft.client.renderer.chunk.SectionCompiler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -32,7 +32,7 @@ public class SectionCompilerMixin {
 
     @Shadow
     @Final
-    private BlockStateModelSet blockModelSet;
+    private BlockRenderDispatcher blockRenderer;
 
     @ModifyExpressionValue(
             method = {
@@ -44,7 +44,7 @@ public class SectionCompilerMixin {
                     target = "Lnet/minecraft/world/level/block/state/BlockState;getSeed(Lnet/minecraft/core/BlockPos;)J"
             )
     )
-    long coordfuscate$modifySeed(long seed, @Local(name = "pos") BlockPos pos) {
+    long coordfuscate$modifySeed(long seed, @Local(ordinal = 2) BlockPos pos) {
         TextureRotation textureRotation = config().textureRotation;
         int offset = minecraftDuck().coordfuscate$posOffset();
         if (textureRotation == TextureRotation.DEFAULT) {
@@ -62,10 +62,10 @@ public class SectionCompilerMixin {
             },
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/client/renderer/block/BlockStateModelSet;get(Lnet/minecraft/world/level/block/state/BlockState;)Lnet/minecraft/client/renderer/block/dispatch/BlockStateModel;"
+                    target = "Lnet/minecraft/client/renderer/block/BlockRenderDispatcher;getBlockModel(Lnet/minecraft/world/level/block/state/BlockState;)Lnet/minecraft/client/renderer/block/model/BlockStateModel;"
             )
     )
-    BlockStateModel coordfuscate$disguiseBedrockModel(BlockStateModel blockModel, @Local(name = "pos") BlockPos pos, @Local(name = "blockState") BlockState blockState) {
+    BlockStateModel coordfuscate$disguiseBedrockModel(BlockStateModel blockModel, @Local(ordinal = 2) BlockPos pos, @Local BlockState blockState) {
         if (config().disguiseBedrock && blockState.is(Blocks.BEDROCK)) {
             if (config().disguiseBedrock$reveal) {
                 Map<BlockPos, Long> reveal = minecraftDuck().coordfuscate$revealBedrock();
@@ -91,7 +91,7 @@ public class SectionCompilerMixin {
             BlockPos disguisePos = pos.relative(direction);
             BlockState disguiseBlockState = level.getBlockState(disguisePos);
             if (config().disguiseBedrock$imitate.contains(disguiseBlockState.getBlock())) {
-                return this.blockModelSet.get(disguiseBlockState);
+                return this.blockRenderer.getBlockModel(disguiseBlockState);
             }
         }
 
@@ -108,7 +108,7 @@ public class SectionCompilerMixin {
             BlockPos disguisePos = pos.relative(direction);
             BlockState disguiseBlockState = level.getBlockState(disguisePos);
             if (config().disguiseBedrock$imitate.contains(disguiseBlockState.getBlock())) {
-                return this.blockModelSet.get(disguiseBlockState);
+                return this.blockRenderer.getBlockModel(disguiseBlockState);
             }
         }
 
@@ -160,7 +160,7 @@ public class SectionCompilerMixin {
                                 BlockPos disguisePos = new BlockPos(x, searchY, z);
                                 BlockState disguiseBlockState = chunk.getBlockState(disguisePos);
                                 if (config().disguiseBedrock$imitate.contains(disguiseBlockState.getBlock())) {
-                                    return this.blockModelSet.get(disguiseBlockState);
+                                    return this.blockRenderer.getBlockModel(disguiseBlockState);
                                 }
                             }
                         }

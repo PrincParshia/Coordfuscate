@@ -3,6 +3,7 @@ package princ.coordfuscate.client.mixin.gui.components.debug;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import net.minecraft.client.gui.components.debug.DebugEntryPosition;
 import net.minecraft.resources.Identifier;
+import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
@@ -46,8 +47,8 @@ public class DebugEntryPositionMixin {
     @ModifyExpressionValue(
             method = "display",
             at = {
-                    @At(value = "INVOKE", target = "Lnet/minecraft/world/level/ChunkPos;x()I"),
-                    @At(value = "INVOKE", target = "Lnet/minecraft/world/level/ChunkPos;z()I"),
+                    @At(value = "FIELD", target = "Lnet/minecraft/world/level/ChunkPos;x:I", opcode = Opcodes.GETFIELD),
+                    @At(value = "FIELD", target = "Lnet/minecraft/world/level/ChunkPos;z:I", opcode = Opcodes.GETFIELD),
                     @At(value = "INVOKE", target = "Lnet/minecraft/world/level/ChunkPos;getRegionLocalX()I"),
                     @At(value = "INVOKE", target = "Lnet/minecraft/world/level/ChunkPos;getRegionLocalZ()I"),
                     @At(value = "INVOKE", target = "Lnet/minecraft/world/level/ChunkPos;getRegionX()I"),

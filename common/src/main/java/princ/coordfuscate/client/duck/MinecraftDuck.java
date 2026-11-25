@@ -1,6 +1,6 @@
 package princ.coordfuscate.client.duck;
 
-import net.minecraft.client.renderer.block.dispatch.BlockStateModel;
+import net.minecraft.client.renderer.block.model.BlockStateModel;
 import net.minecraft.core.BlockPos;
 
 import java.util.Map;

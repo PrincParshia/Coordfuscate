@@ -28,7 +28,7 @@ public abstract class CompassAngleStateMixin {
                     target = "Lnet/minecraft/client/renderer/item/properties/numeric/CompassAngleState;getRotationTowardsCompassTarget(Lnet/minecraft/world/entity/ItemOwner;JLnet/minecraft/core/BlockPos;)F"
             )
     )
-    float coordfuscate$compassDrift(float targetRotation, ItemStack itemStack, ClientLevel level, int seed, ItemOwner owner, @Local(name = "gameTime") long gameTime) {
+    float coordfuscate$compassDrift(float targetRotation, ItemStack itemStack, ClientLevel level, int seed, ItemOwner owner, @Local long gameTime) {
         if (config().compassDrift && config().compassDrift$applyFor.contains(this.compassTarget)) {
             LivingEntity entity = owner.asLivingEntity();
             boolean heldInHand = entity != null && (entity.getMainHandItem() == itemStack || entity.getOffhandItem() == itemStack);

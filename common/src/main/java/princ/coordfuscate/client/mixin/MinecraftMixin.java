@@ -2,7 +2,7 @@ package princ.coordfuscate.client.mixin;
 
 import me.fzzyhmstrs.fzzy_config.validation.misc.ValidatedKeybind;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.block.dispatch.BlockStateModel;
+import net.minecraft.client.renderer.block.model.BlockStateModel;
 import net.minecraft.core.BlockPos;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
