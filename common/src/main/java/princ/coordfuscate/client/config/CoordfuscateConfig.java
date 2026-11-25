@@ -110,6 +110,6 @@ public class CoordfuscateConfig extends Config {
     @Override
     public void onUpdateClient() {
         Minecraft minecraft = Minecraft.getInstance();
-        minecraft.levelExtractor.allChanged();
+        minecraft.levelRenderer.allChanged();
     }
 }

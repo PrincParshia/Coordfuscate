@@ -13,7 +13,7 @@
         "multiplayer.MultiPlayerGameModeMixin",
         "renderer.CloudRendererMixin",
         "renderer.chunk.SectionCompilerMixin",
-        "renderer.extract.LevelExtractorMixin",
+        "renderer.extract.LevelRendererMixin",
         "renderer.item.properties.numeric.CompassAngleStateMixin",
         "server.packs.resources.SimpleReloadInstanceMixin"
     ],

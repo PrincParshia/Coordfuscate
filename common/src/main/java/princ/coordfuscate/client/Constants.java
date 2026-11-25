@@ -58,7 +58,7 @@ public class Constants {
         duck.coordfuscate$revealBedrock().entrySet().removeIf(entry -> {
             BlockPos pos = entry.getKey();
             boolean disguise = now - entry.getValue() >= 1000L;
-            if (disguise) minecraft.levelExtractor.setBlocksDirty(pos.getX(), pos.getY(), pos.getZ(), pos.getX(), pos.getY(), pos.getZ());
+            if (disguise) minecraft.levelRenderer.setBlocksDirty(pos.getX(), pos.getY(), pos.getZ(), pos.getX(), pos.getY(), pos.getZ());
             return disguise;
         });
     }

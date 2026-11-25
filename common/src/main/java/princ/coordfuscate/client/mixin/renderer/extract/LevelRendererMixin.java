@@ -1,7 +1,7 @@
 package princ.coordfuscate.client.mixin.renderer.extract;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.extract.LevelExtractor;
+import net.minecraft.client.renderer.LevelRenderer;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -12,8 +12,8 @@ import princ.coordfuscate.client.duck.MinecraftDuck;
 
 import static princ.coordfuscate.client.Constants.posOffset;
 
-@Mixin(LevelExtractor.class)
-public class LevelExtractorMixin {
+@Mixin(LevelRenderer.class)
+public class LevelRendererMixin {
 
     @Shadow
     @Final

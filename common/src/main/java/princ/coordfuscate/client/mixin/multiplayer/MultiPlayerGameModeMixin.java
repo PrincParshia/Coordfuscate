@@ -27,7 +27,7 @@ public class MultiPlayerGameModeMixin {
         ClientLevel level = this.minecraft.level;
         if (level != null && level.getBlockState(pos).is(Blocks.BEDROCK)) {
             ((MinecraftDuck) this.minecraft).coordfuscate$revealBedrock().put(pos.immutable(), Util.getMillis());
-            this.minecraft.levelExtractor.setBlocksDirty(pos.getX(), pos.getY(), pos.getZ(), pos.getX(), pos.getY(), pos.getZ());
+            this.minecraft.levelRenderer.setBlocksDirty(pos.getX(), pos.getY(), pos.getZ(), pos.getX(), pos.getY(), pos.getZ());
         }
     }
 }
