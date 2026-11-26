@@ -15,7 +15,7 @@ public enum DebugInfo implements EnumTranslatable {
     BIOME("biome"),
     LOOKING_AT$XYZ("lookingAt$xyz"),
     LOOKING_AT$NAME("lookingAt$name"),
-    SECTION_POSITION("sectionPosition");
+    CHUNK_POSITION("sectionPosition");
 
     final String identifier;
 

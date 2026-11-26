@@ -5,16 +5,12 @@
     "compatibilityLevel": "JAVA_21",
     "client": [
         "MinecraftMixin",
-        "gui.components.debug.DebugEntryBiomeMixin",
-        "gui.components.debug.DebugEntryLookingAtStateMixin",
-        "gui.components.debug.DebugEntryPositionMixin",
-        "gui.components.debug.DebugEntrySectionPositionMixin",
+        "gui.components.DebugScreenOverlayMixin",
         "multiplayer.ClientPacketListenerMixin",
         "multiplayer.MultiPlayerGameModeMixin",
-        "renderer.CloudRendererMixin",
-        "renderer.chunk.SectionCompilerMixin",
-        "renderer.extract.LevelRendererMixin",
-        "renderer.item.properties.numeric.CompassAngleStateMixin",
+        "renderer.block.BlockRenderDispatcherMixin",
+        "renderer.LevelRendererMixin",
+        "renderer.item.CompassItemPropertyFunctionMixin",
         "server.packs.resources.SimpleReloadInstanceMixin"
     ],
     "injectors": {

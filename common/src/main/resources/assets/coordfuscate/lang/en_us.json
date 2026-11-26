@@ -36,7 +36,7 @@
     "config.coordfuscate.debugInfo.mask$lookingAt$group": "Looking At",
     "config.coordfuscate.debugInfo.mask$lookingAt$xyz": "XYZ",
     "config.coordfuscate.debugInfo.mask$lookingAt$name": "Name",
-    "config.coordfuscate.debugInfo.mask$sectionPosition": "Section Position",
+    "config.coordfuscate.debugInfo.mask$chunkPosition": "Chunk Position",
     "config.coordfuscate.debugInfo.XYZ": "XYZ",
     "config.coordfuscate.debugInfo.BLOCK": "Block",
     "config.coordfuscate.debugInfo.CHUNK": "Chunk",
@@ -47,5 +47,5 @@
     "config.coordfuscate.debugInfo.BIOME": "Biome",
     "config.coordfuscate.debugInfo.LOOKING_AT$XYZ": "Looking At: XYZ",
     "config.coordfuscate.debugInfo.LOOKING_AT$NAME": "Looking At: Name",
-    "config.coordfuscate.debugInfo.SECTION_POSITION": "Section Position"
+    "config.coordfuscate.debugInfo.CHUNK_POSITION": "Chunk Position"
 }

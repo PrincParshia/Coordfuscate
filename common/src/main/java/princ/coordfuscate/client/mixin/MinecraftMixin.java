@@ -2,7 +2,7 @@ package princ.coordfuscate.client.mixin;
 
 import me.fzzyhmstrs.fzzy_config.validation.misc.ValidatedKeybind;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.block.model.BlockStateModel;
+import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.BlockPos;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -23,7 +23,7 @@ public class MinecraftMixin implements MinecraftDuck {
     boolean coordfuscate$debugInfo$mask;
 
     @Unique
-    final Map<BlockPos, BlockStateModel> coordfuscate$disguiseBedrockCache = new ConcurrentHashMap<>();
+    final Map<BlockPos, BakedModel> coordfuscate$disguiseBedrockCache = new ConcurrentHashMap<>();
 
     @Unique
     final Map<BlockPos, Long> coordfuscate$revealBedrock = new ConcurrentHashMap<>();
@@ -39,7 +39,7 @@ public class MinecraftMixin implements MinecraftDuck {
     }
 
     @Override
-    public Map<BlockPos, BlockStateModel> coordfuscate$disguiseBedrockCache() {
+    public Map<BlockPos, BakedModel> coordfuscate$disguiseBedrockCache() {
         return this.coordfuscate$disguiseBedrockCache;
     }
 

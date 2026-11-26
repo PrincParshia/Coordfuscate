@@ -4,11 +4,11 @@ import me.fzzyhmstrs.fzzy_config.api.ConfigApiJava;
 import me.fzzyhmstrs.fzzy_config.api.RegisterType;
 import me.fzzyhmstrs.fzzy_config.validation.collection.ValidatedChoiceList;
 import me.fzzyhmstrs.fzzy_config.validation.misc.ValidatedKeybind;
+import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
-import net.minecraft.util.Util;
 import net.minecraft.world.level.levelgen.RandomSupport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,8 +37,8 @@ public class Constants {
         return config;
     }
 
-    public static Identifier withDefaultNamespace(String path) {
-        return Identifier.fromNamespaceAndPath(NAMESPACE, path);
+    public static ResourceLocation withDefaultNamespace(String path) {
+        return ResourceLocation.fromNamespaceAndPath(NAMESPACE, path);
     }
 
     public static int posOffset() {

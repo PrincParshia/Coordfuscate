@@ -12,7 +12,6 @@ import me.fzzyhmstrs.fzzy_config.validation.minecraft.ValidatedRegistryType;
 import me.fzzyhmstrs.fzzy_config.validation.misc.ValidatedEnum;
 import me.fzzyhmstrs.fzzy_config.validation.misc.ValidatedKeybind;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.item.properties.numeric.CompassAngleState;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
@@ -21,6 +20,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import princ.coordfuscate.client.config.type.CloudPosition;
+import princ.coordfuscate.client.config.type.CompassTarget;
 import princ.coordfuscate.client.config.type.DebugInfo;
 import princ.coordfuscate.client.config.type.TextureRotation;
 
@@ -47,10 +47,10 @@ public class CoordfuscateConfig extends Config {
                 (block, key) -> Component.literal(BuiltInRegistries.BLOCK.getKey(block).toString())
         );
         this.compassDrift$applyFor = new ValidatedList<>(
-                Arrays.asList(CompassAngleState.CompassTarget.values()),
-                new ValidatedEnum<>(CompassAngleState.CompassTarget.class)
+                Arrays.asList(CompassTarget.values()),
+                new ValidatedEnum<>(CompassTarget.class)
         ).toChoiceList(
-                Arrays.asList(CompassAngleState.CompassTarget.values()),
+                Arrays.asList(CompassTarget.values()),
                 ValidatedChoiceList.WidgetType.POPUP,
                 (compassTarget, identifier) -> Component.translatable(CONFIG_TRANSLATION_PREFIX + ".compassDrift$applyFor." + compassTarget.name())
         );
@@ -66,7 +66,7 @@ public class CoordfuscateConfig extends Config {
     public ConfigGroup compassDrift$group = new ConfigGroup("compassDrift");
     public boolean compassDrift = true;
     @ConfigGroup.Pop
-    public ValidatedChoiceList<CompassAngleState.CompassTarget> compassDrift$applyFor;
+    public ValidatedChoiceList<CompassTarget> compassDrift$applyFor;
     public DebugInfoConfig debugInfo = new DebugInfoConfig();
 
     @Translation(prefix = CONFIG_TRANSLATION_PREFIX + ".debugInfo")
@@ -104,7 +104,7 @@ public class CoordfuscateConfig extends Config {
         @ConfigGroup.Pop
         public boolean mask$lookingAt$name = true;
         @ConfigGroup.Pop
-        public boolean mask$sectionPosition = true;
+        public boolean mask$chunkPosition = true;
     }
 
     @Override
